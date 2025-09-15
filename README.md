@@ -90,13 +90,6 @@ During the simulation, the terminal will display:
 -   Final state of each airplane;
 -   Summary of resources and policies used.
 
-## Authors
-
--   Leonardo Braga
--   Victor Reis
-
-Federal University of Pelotas (UFPel) -- RS, Brazil
-
 # [PT-BR] Simulação de Controle de Tráfego Aéreo em Aeroporto Internacional
 
 Este projeto implementa uma simulação de controle de tráfego aéreo em um aeroporto internacional, utilizando threads em C (POSIX Threads) e semáforos. O sistema gerencia de forma concorrente recursos limitados (pistas, portões e torre de controle), tratando voos domésticos e internacionais com diferentes regras de operação e mecanismos de prioridade, prevenindo deadlocks e starvation.
@@ -177,9 +170,3 @@ Durante a simulação, o terminal exibirá:
 - Taxa de sucesso;
 - Estado final de cada avião;
 - Resumo dos recursos e políticas usadas.
-
-## Autores
-- Leonardo Braga
-- Victor Reis
-
-Universidade Federal de Pelotas (UFPel) – RS, Brasil
