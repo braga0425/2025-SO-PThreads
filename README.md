@@ -1,6 +1,105 @@
-# Simulação de Controle de Tráfego Aéreo em Aeroporto Internacional
+# Air Traffic Control Simulation at an International Airport
 
-Este projeto implementa uma simulação de controle de tráfego aéreo em um aeroporto internacional, utilizando threads em C (POSIX Threads) e semáforos. O sistema gerencia de forma concorrente recursos limitados (pistas, portões e torre de controle), tratando voos domésticos e internacionais com diferentes regras de operação e mecanismos de prioridade, prevenindo deadlocks* e starvation.
+This project implements a simulation of air traffic control at an
+international airport, using C threads (POSIX Threads) and semaphores.
+The system concurrently manages limited resources (runways, gates, and
+the control tower), handling domestic and international flights with
+different operating rules and priority mechanisms, preventing deadlocks
+and starvation.
+
+## Features
+
+-   Dynamic creation of airplanes (threads) at random intervals;
+-   Management of shared resources:
+    -   **3 runways** for landings and takeoffs;
+    -   **5 gates** for boarding/disembarking;
+    -   **1 control tower** with up to 2 simultaneous operations.
+-   **Deadlock Prevention:** resources allocated atomically;
+-   **Starvation Prevention:** adaptive priority system and critical state handling;
+-   **Intermediate** and **final** reports with simulation statistics;
+-   Handling of extreme cases: go-arounds and crashes.
+
+## Simulation Rules
+
+Each airplane performs 3 sequential operations:
+1. **Landing;**
+2. **Disembarking;**
+3. **Takeoff.**
+\
+Flight differences:
+- **International flights:** receive higher initial priority;
+- **Domestic flights:** priority increases with waiting time.
+
+Possible airplane states:
+- Waiting / Landing / Disembarking / Taking off;
+- Finished;
+- Go-around;
+- Crashed (due to starvation).
+
+## Code Structure
+
+-   **Main threads:**
+    -   `thread_criador_avioes`: periodically creates new airplanes;
+    -   `thread_aviao`: executes the sequence of operations for each
+        airplane;
+    -   `thread_monitor`: generates intermediate reports.
+-   **Resource modules:**
+    -   Semaphores for runways and gates;
+    -   Tower control via mutex + condition variable.
+-   **Concurrency management:**
+    -   Priority queue (`fila_requisicoes`);
+    -   Function `alocar_recursos_atomicos`: ensures safe allocation;
+    -   Timeout mechanisms, critical state, and crash handling.
+
+## Compilation and Execution
+
+Prerequisites:
+- **C Compiler (GCC);**
+- **POSIX Threads and Semaphore libraries** (already included in most
+Linux systems).
+
+### Compilation
+
+``` bash
+gcc -o airport_control airport_control.c -pthread
+```
+
+### Execution
+
+``` bash
+./airport_control
+```
+
+During the simulation, the terminal will display:
+- Real-time logs about each airplane operation;
+- Critical event messages (critical state, crashes, go-arounds);
+- Periodic performance reports.
+
+## Reports
+
+### Intermediate (every 10s):
+
+-   Number of airplanes created, finished, crashed, and go-arounds;
+-   Starvation cases;
+-   Size of the request queue.
+
+### Final:
+
+-   Global simulation statistics;
+-   Success rate;
+-   Final state of each airplane;
+-   Summary of resources and policies used.
+
+## Authors
+
+-   Leonardo Braga
+-   Victor Reis
+
+Federal University of Pelotas (UFPel) -- RS, Brazil
+
+# [PT-BR] Simulação de Controle de Tráfego Aéreo em Aeroporto Internacional
+
+Este projeto implementa uma simulação de controle de tráfego aéreo em um aeroporto internacional, utilizando threads em C (POSIX Threads) e semáforos. O sistema gerencia de forma concorrente recursos limitados (pistas, portões e torre de controle), tratando voos domésticos e internacionais com diferentes regras de operação e mecanismos de prioridade, prevenindo deadlocks e starvation.
 
 ## Funcionalidades
 
